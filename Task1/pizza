@@ -1,0 +1,24 @@
+def calculate_pizza_price(num_pizzas, delivery_required, is_tuesday, used_app):
+    # Constants
+    PIZZA_PRICE = 12.00
+    DELIVERY_CHARGE = 3.00
+    TUESDAY_DISCOUNT = 0.2
+    APP_DISCOUNT = 0.1
+
+    # Calculate base price
+    base_price = num_pizzas * PIZZA_PRICE
+
+    # Apply discounts
+    if is_tuesday:
+        base_price *= (1 - TUESDAY_DISCOUNT)
+    if used_app:
+        base_price *= (1 - APP_DISCOUNT)
+
+    # Add delivery charge if required
+    if delivery_required:
+        base_price += DELIVERY_CHARGE
+
+    return base_price
+
+# Example usage
+num_pizzas =
