@@ -1,0 +1,6 @@
+1 how pizza works
+The “Pizza” program is a simple Python script that calculates the total price of a pizza order based on the provided rules. 
+It collects information about the order, applies appropriate discounts based on whether it’s Tuesday, whether delivery is required, and whether the customer used the BPP app. 
+The program uses functions to avoid code duplication and ensures meaningful identifiers for variables and constants.
+2 It is nomal and it is working
+3 I have basically finished it
