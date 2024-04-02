@@ -1,0 +1,61 @@
+import sys
+
+def read_daily_log(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Initialize variables
+    total_time_inside = 0
+    intruder_count = 0
+    correct_cat_entries = 0
+    correct_cat_total_duration = 0
+    correct_cat_longest_duration = 0
+    correct_cat_shortest_duration = float('inf')
+
+    for line in lines:
+        time_in, time_out, is_intruder = line.strip().split()
+        time_in, time_out = int(time_in), int(time_out)
+
+        # Calculate time spent inside
+        duration = time_out - time_in
+
+        # Check if it's an intruder
+        if is_intruder == '1':
+            intruder_count += 1
+        else:
+            # It's the correct cat
+            correct_cat_entries += 1
+            correct_cat_total_duration += duration
+            correct_cat_longest_duration = max(correct_cat_longest_duration, duration)
+            correct_cat_shortest_duration = min(correct_cat_shortest_duration, duration)
+
+    # Calculate average duration for the correct cat
+    if correct_cat_entries > 0:
+        correct_cat_avg_duration = correct_cat_total_duration / correct_cat_entries
+    else:
+        correct_cat_avg_duration = 0
+
+    return correct_cat_entries, intruder_count, correct_cat_total_duration, correct_cat_avg_duration, correct_cat_longest_duration, correct_cat_shortest_duration
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python analyze_cat_shelter.py <daily_log_file>")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+
+    try:
+        correct_cat_entries, intruder_count, correct_cat_total_duration, correct_cat_avg_duration, correct_cat_longest_duration, correct_cat_shortest_duration = read_daily_log(file_path)
+        print(f"Total number of correct cat entries: {correct_cat_entries}")
+        print(f"Number of intruding cats doused with water: {intruder_count}")
+        print(f"Total time spent by the correct cat: {correct_cat_total_duration} minutes")
+        print(f"Average duration of each visit by the correct cat: {correct_cat_avg_duration:.2f} minutes")
+        print(f"Longest visit duration by the correct cat: {correct_cat_longest_duration} minutes")
+        print(f"Shortest visit duration by the correct cat: {correct_cat_shortest_duration} minutes")
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
